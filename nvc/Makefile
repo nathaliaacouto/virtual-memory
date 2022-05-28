@@ -1,5 +1,7 @@
+all: garbage
+
 garbage: main.c  
-	gcc main.c -o garbage-W -Wall -pedantic
+	gcc main.c -o garbage -W -Wall -pedantic
 
 .PHONY: clean run
 
