@@ -1,20 +1,25 @@
-/*Get String from a file and turn it into Int*/
-void get_str_int(void) 
+/* Get String from a file and turn it into Int
+Then, add the numbers into a array */
+int* get_str_int(int count) 
 {
   FILE *file = fopen("addresses.txt", "r");
+
   char adr_char[20]; 
   int a = 0;
+  int *array;
+
+  //Allocate space for array
+  array = (int*) malloc(count*sizeof(int));
 
   while(fgets(adr_char, 20, file)) {
     int adr_char_int = atoi(adr_char);
-    printf("%d\n", adr_char_int);
+    array[a] = adr_char_int;
+    a++;
   } 
-  //numeros -> colocar em array
-  //pegar array -> transformar os número em binário
-  //ou fazer shift que nem mendas falou
-  //8bits -> page index
 
   fclose(file);
+
+  return array;
 }
 
 /* Counts how many lines there are in a file */
