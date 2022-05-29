@@ -1,7 +1,9 @@
 all: garbage
+CC=gcc
+CFLAGS=-I.
 
-garbage: main.c  
-	gcc main.c -o garbage -W -Wall -pedantic
+garbage: nvc.o errors.o functions.o
+	gcc -o garbage nvc.o errors.o functions.o
 
 .PHONY: clean run
 
