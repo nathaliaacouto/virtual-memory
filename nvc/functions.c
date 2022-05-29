@@ -45,7 +45,8 @@ int count_file_lines(FILE *file)
 
 /* Number functions */
 
-void int_to_bin(int i) 
+/* Turns a decimal to binary */
+void dec_to_bin(int i) 
 { 
   int n[16];
   int bin = 0;
@@ -59,20 +60,11 @@ void int_to_bin(int i)
   for (int f = 0; f < 16; f++) {
     index += sprintf(&str[index], "%d", n[f]);
   }
-
-  //binário fica invertido
+  //Binary is inverted, so another function is used
   my_strrev(str);
 }
 
-int my_pow(int a, int b) 
-{
-  int result = a; 
-  for (int i = 0; i < (b-1); i++) { 
-    result = result * a;
-  }
-  return result;
-}
-
+/* Inverts a String and stores the result in another string */
 void my_strrev(char *str)
 {
   char bin[16];
@@ -86,28 +78,53 @@ void my_strrev(char *str)
   divide_binary(bin);
 }
 
+/* Divides a string in two, stroring both parts in
+two other strings of size 7 */
 void divide_binary(char *binary)
 {
-  char *pagenum_c;
-  char *offset_c;
+  int size = 7;
+  char *pt1;
+  char *pt2;
   int j = 0;
 
-  pagenum_c = (char*) malloc(7*sizeof(char));
-  offset_c = (char*) malloc(7*sizeof(char));
+  pt1 = (char*) malloc(size*sizeof(char));
+  pt2 = (char*) malloc(size*sizeof(char));
 
   for (int i = 0; i < (strlen(binary)/2); i++) {
-    pagenum_c[i] = binary[i];
+    pt1[i] = binary[i];
   }
   for (int i = (strlen(binary)/2); i < strlen(binary); i++) {
-    offset_c[j] = binary[i];
+    pt2[j] = binary[i];
     j++;
   }
-  int pagenum = atoi(pagenum_c);
-  int offset = atoi(offset_c);
-  printf("\npagenum: %d, offset: %d\n", pagenum, offset);
+  
+  pagenum_offset(pt1, pt2);
 }
 
-void bin_to_int(int binary)
+/* Gets Page number and Offset in binary
+and turn both to decimal */
+void pagenum_offset(char *pg, char *of)
+{
+  int pagenum_bin = atoi(pg);
+  int offset_bin = atoi(of);
+  printf("\npagenum: %d, offset: %d\n", pagenum_bin, offset_bin);
+  bin_to_dec(pagenum_bin);
+  bin_to_dec(offset_bin);
+}
+
+/* Power of a number */
+int my_pow(int a, int b) 
+{
+  int result = a; 
+  for (int i = 0; i < (b-1); i++) { 
+    result = result * a;
+  }
+  return result;
+}
+
+/* Gets a binary number and turn to decimal */
+//!NOT WORKING!
+void bin_to_dec(int binary)
 {
   int numbers[7];
 
