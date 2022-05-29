@@ -7,3 +7,12 @@ int error_open_file(FILE *file)
   }
   return 0;
 }
+
+int error_file_empty(int count)
+{
+  if (count < 1) {
+    printf("Error: file empty");
+    exit(0);
+  }
+  return 0;
+}
