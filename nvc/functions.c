@@ -48,7 +48,7 @@ int count_file_lines(FILE *file)
 /* Turns a decimal to binary */
 void dec_to_bin(int i) 
 { 
-  int n[16];
+  int n[BIN_SIZE];
   int bin = 0, a = 0;
 
   for (a = 0; i > 0; a++) {
@@ -57,29 +57,28 @@ void dec_to_bin(int i)
   }
 
   //"a" will be equivalent to the size of the binary
-  //thus, if "a" is less than 16, more 0 need to be added
-  while (a < 16) { 
+  //thus, if "a" is less than BIN_SIZE, more zeros(0) need to be added
+  while (a < BIN_SIZE) { 
     n[a] = 0;
     a++;
   }
   
   char str[128];
   int index = 0;
-  for (int f = 0; f < 16; f++) {
+  for (int f = 0; f < BIN_SIZE; f++) {
     sprintf(&str[f], "%d", n[f]);
   }
   
   //We must reverse the string to get the final binary
   my_strrev(str);
-  
 }
 
 /* Inverts a String and stores the result in another string */
 void my_strrev(char *str) 
 {
-  char bin[16];
+  char bin[BIN_SIZE];
   int j = 0;
-  for (int i = 15; i >= 0; i--) {
+  for (int i = (BIN_SIZE - 1); i >= 0; i--) {
     bin[j] = str[i];
     j++;
   }
@@ -89,10 +88,10 @@ void my_strrev(char *str)
 }
 
 /* Divides a string in two, stroring both parts in
-two other strings of size 7 */
+two other strings of half the size of Binary */
 void divide_binary(char *binary)
 {
-  int size = 7;
+  int size = BIN_SIZE/2;
   char *pt1;
   char *pt2;
   int j = 0;
@@ -100,13 +99,15 @@ void divide_binary(char *binary)
   pt1 = (char*) malloc(size*sizeof(char));
   pt2 = (char*) malloc(size*sizeof(char));
 
-  for (int i = 0; i < (strlen(binary)/2); i++) {
+  for (int i = 0; i < size; i++) {
     pt1[i] = binary[i];
   }
-  for (int i = (strlen(binary)/2); i < strlen(binary); i++) {
+  for (int i = size; i < BIN_SIZE; i++) {
     pt2[j] = binary[i];
     j++;
   }
+
+  printf("\npagenum: %s, offset: %s\n", pt1, pt2);
   
   pagenum_offset(pt1, pt2);
 }
@@ -122,7 +123,7 @@ void pagenum_offset(char *pg, char *of)
   bin_to_dec(offset_bin);
 }
 
-/* Power of a number */
+/* Power of a number (a^b) */
 int my_pow(int a, int b) 
 {
   int result = a; 
@@ -144,28 +145,4 @@ void bin_to_dec(int binary)
     binary = binary/10;
   }
   printf("\ndecimal: %d\n", decimal);
-}
-
-int len_of_int(int i) 
-{ 
-  //ref: https://stackoverflow.com/questions/3068397/finding-the-length-of-an-integer-in-c
-  if (i >= 1000000) { 
-    return 7;
-  }
-  if (i >= 100000) {   
-    return 6;
-  }
-  if (i >= 10000) {     
-    return 5;
-  }
-  if (i >= 1000) {      
-    return 4;
-  }
-  if (i >= 100) {        
-    return 3;
-  }
-  if (i >= 10) {       
-    return 2;
-  }
-  return 1;
 }

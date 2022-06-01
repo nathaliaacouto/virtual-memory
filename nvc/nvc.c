@@ -3,12 +3,13 @@
 /* to-do
 [X] transformação de binário para decimal
 [] aplicar a questão do binário para todos os números do array
+[] adicionar mais duas funções de tratamento de erro
 */
 
 /* erros:
 [X] transformação de decimal para binário incorreta
-[] divisão do número binário incorreta
-[] transformação de binário para decimal errando por 1
+[X] divisão do número binário incorreta
+[] transformação de binário para decimal incorreta -> PRINCIPAL ERRO
 */
 
 /* Begin - Library declaration */

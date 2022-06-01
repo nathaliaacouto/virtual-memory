@@ -3,6 +3,8 @@
 #include <string.h>
 #include <math.h>
 
+#define BIN_SIZE 16 //size of Binary
+
 /* File functions */
 int* get_str_int(int count);
 int count_file_lines(FILE *file);
@@ -10,7 +12,7 @@ int count_file_lines(FILE *file);
 /* Number functions */
 void dec_to_bin(int i);
 void my_strrev(char *str);
-void divide_binary(char *binary);
+void divide_binary(char *binary); //not working!
 void pagenum_offset(char *pg, char *of);
 int my_pow(int a, int b);
 void bin_to_dec(int binary); //not working!
