@@ -1,8 +1,14 @@
 /* What the code does */
 
 /* to-do
-[] transformação de binário para decimal
+[X] transformação de binário para decimal
 [] aplicar a questão do binário para todos os números do array
+*/
+
+/* erros:
+[X] transformação de decimal para binário incorreta
+[] divisão do número binário incorreta
+[] transformação de binário para decimal errando por 1
 */
 
 /* Begin - Library declaration */
@@ -29,7 +35,7 @@ int main()
   adr_txt = fopen("addresses.txt","r");
   error_open_file(adr_txt);
 
-  dec_to_bin(12107);
+  dec_to_bin(1245);
 
   //Count lines
   int c = count_file_lines(adr_txt);

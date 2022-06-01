@@ -49,27 +49,37 @@ int count_file_lines(FILE *file)
 void dec_to_bin(int i) 
 { 
   int n[16];
-  int bin = 0;
-  for (int a = 0; i > 0; a++) {
+  int bin = 0, a = 0;
+
+  for (a = 0; i > 0; a++) {
     n[a] = i % 2;
     i = i/2;
   }
 
+  //"a" will be equivalent to the size of the binary
+  //thus, if "a" is less than 16, more 0 need to be added
+  while (a < 16) { 
+    n[a] = 0;
+    a++;
+  }
+  
   char str[128];
   int index = 0;
   for (int f = 0; f < 16; f++) {
-    index += sprintf(&str[index], "%d", n[f]);
+    sprintf(&str[f], "%d", n[f]);
   }
-  //Binary is inverted, so another function is used
+  
+  //We must reverse the string to get the final binary
   my_strrev(str);
+  
 }
 
 /* Inverts a String and stores the result in another string */
-void my_strrev(char *str)
+void my_strrev(char *str) 
 {
   char bin[16];
   int j = 0;
-  for (int i = 13; i >= 0; i--) {
+  for (int i = 15; i >= 0; i--) {
     bin[j] = str[i];
     j++;
   }
@@ -102,7 +112,7 @@ void divide_binary(char *binary)
 }
 
 /* Gets Page number and Offset in binary
-and turn both to decimal */
+and turn both to integer */
 void pagenum_offset(char *pg, char *of)
 {
   int pagenum_bin = atoi(pg);
@@ -126,13 +136,36 @@ int my_pow(int a, int b)
 //!NOT WORKING!
 void bin_to_dec(int binary)
 {
-  int numbers[7];
+  int decimal = 0, aux = 0;
 
   for (int i = 0; i < 7; i++) {
-    numbers[i] = binary/my_pow(10,i);
+    aux = binary % 10;
+    decimal = decimal + (aux * (my_pow(2,i)));
+    binary = binary/10;
   }
-  printf("\narray:");
-  for (int i = 0; i < 7; i++) {
-    printf("%d", numbers[i]);
+  printf("\ndecimal: %d\n", decimal);
+}
+
+int len_of_int(int i) 
+{ 
+  //ref: https://stackoverflow.com/questions/3068397/finding-the-length-of-an-integer-in-c
+  if (i >= 1000000) { 
+    return 7;
   }
+  if (i >= 100000) {   
+    return 6;
+  }
+  if (i >= 10000) {     
+    return 5;
+  }
+  if (i >= 1000) {      
+    return 4;
+  }
+  if (i >= 100) {        
+    return 3;
+  }
+  if (i >= 10) {       
+    return 2;
+  }
+  return 1;
 }
