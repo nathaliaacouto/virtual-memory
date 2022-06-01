@@ -82,7 +82,6 @@ void my_strrev(char *str)
     bin[j] = str[i];
     j++;
   }
-  printf("\nbinário: %s\n", bin);
 
   divide_binary(bin);
 }
@@ -106,27 +105,33 @@ void divide_binary(char *binary)
     pt2[j] = binary[i];
     j++;
   }
-
-  printf("\npagenum: %s, offset: %s\n", pt1, pt2);
   
   pagenum_offset(pt1, pt2);
 }
 
 /* Gets Page number and Offset in binary
-and turn both to integer */
+and turn both to integer, then calls another function
+to turn them to decimal, storing the final value
+in the global variable */
 void pagenum_offset(char *pg, char *of)
 {
   int pagenum_bin = atoi(pg);
   int offset_bin = atoi(of);
-  printf("\npagenum: %d, offset: %d\n", pagenum_bin, offset_bin);
-  bin_to_dec(pagenum_bin);
-  bin_to_dec(offset_bin);
+
+  pagenum_dec = bin_to_dec(pagenum_bin);
+  offset_dec = bin_to_dec(offset_bin);
 }
 
 /* Power of a number (a^b) */
 int my_pow(int a, int b) 
 {
   int result = a; 
+  if (b == 0) {
+    result = 1;
+  }
+  if (b == 1) {
+    result = a;
+  }
   for (int i = 0; i < (b-1); i++) { 
     result = result * a;
   }
@@ -134,15 +139,26 @@ int my_pow(int a, int b)
 }
 
 /* Gets a binary number and turn to decimal */
-//!NOT WORKING!
-void bin_to_dec(int binary)
+int bin_to_dec(int binary)
 {
   int decimal = 0, aux = 0;
 
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < BIN_SIZE; i++) {
     aux = binary % 10;
     decimal = decimal + (aux * (my_pow(2,i)));
     binary = binary/10;
   }
-  printf("\ndecimal: %d\n", decimal);
+  return decimal;
+}
+
+/* Returns the Page Number as a decimal */
+int get_page_number(void)
+{
+  return pagenum_dec;
+}
+
+/* Returns the Offset as a decimal */
+int get_offset(void)
+{
+  return offset_dec;
 }

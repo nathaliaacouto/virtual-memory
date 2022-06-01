@@ -4,6 +4,8 @@
 #include <math.h>
 
 #define BIN_SIZE 16 //size of Binary
+int pagenum_dec; //page number
+int offset_dec; //offset
 
 /* File functions */
 int* get_str_int(int count);
@@ -12,10 +14,12 @@ int count_file_lines(FILE *file);
 /* Number functions */
 void dec_to_bin(int i);
 void my_strrev(char *str);
-void divide_binary(char *binary); //not working!
+void divide_binary(char *binary);
 void pagenum_offset(char *pg, char *of);
+int get_page_number(void);
+int get_offset(void);
 int my_pow(int a, int b);
-void bin_to_dec(int binary); //not working!
+int bin_to_dec(int binary);
 int len_of_int(int i);
 
 /*
