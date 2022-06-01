@@ -162,3 +162,17 @@ int get_offset(void)
 {
   return offset_dec;
 }
+
+/* PAGE TABLE FUNCTIONS */
+int in_page_table(int num)
+{
+  int pg[2]; 
+  int j = 0;
+
+  for (int i = 0; i < PAGE_TABLE_SIZE; i++) {
+    if(num == page_table[i][j]) {
+      return 0;
+    }
+  }
+
+}

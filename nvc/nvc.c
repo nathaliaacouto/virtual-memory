@@ -28,8 +28,7 @@ int main()
   FILE *adr_txt;
   int *secondary_mem_adr;
   int pagenum = 0; //page number
-  int offset = 0; //offset
-  int page_table[256][2]; 
+  int offset = 0; //offset 
   /* End - Variable declaration */
 
   //Open file
@@ -44,13 +43,14 @@ int main()
   secondary_mem_adr = (int*) malloc(c*sizeof(int));
   secondary_mem_adr = get_str_int(c); 
 
+  //Close file
+  fclose(adr_txt);
+
   for (int i = 0; i < 10; i++) {
     printf("%d: ", secondary_mem_adr[i]);
     dec_to_bin(secondary_mem_adr[i]);
     pagenum = get_page_number();
-    offset = get_offset();
+    in_page_table(pagenum);
   }
 
-  //Close file
-  fclose(adr_txt);
 }

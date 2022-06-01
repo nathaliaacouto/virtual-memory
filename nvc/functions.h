@@ -4,8 +4,10 @@
 #include <math.h>
 
 #define BIN_SIZE 16 //size of Binary
+#define PAGE_TABLE_SIZE 256
 int pagenum_dec; //page number
 int offset_dec; //offset
+int page_table[256][2];
 
 /* File functions */
 int* get_str_int(int count);
@@ -21,6 +23,8 @@ int get_offset(void);
 int my_pow(int a, int b);
 int bin_to_dec(int binary);
 int len_of_int(int i);
+
+int in_page_table(int num);
 
 /*
 1. decimal para binário -> dec_to_bin
