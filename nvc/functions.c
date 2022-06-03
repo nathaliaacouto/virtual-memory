@@ -64,7 +64,7 @@ void dec_to_bin(int i)
   }
   
   char str[128];
-  int index = 0;
+  int frame = 0;
   for (int f = 0; f < BIN_SIZE; f++) {
     sprintf(&str[f], "%d", n[f]);
   }
@@ -164,15 +164,72 @@ int get_offset(void)
 }
 
 /* PAGE TABLE FUNCTIONS */
+
+/* Gets a number and see if it is already
+inside the page table */
 int in_page_table(int num)
 {
   int pg[2]; 
   int j = 0;
+  if (page_table[num][0] == num) {
+    in_main_men(num);
+  }
+  else {
+    page_fault();
+  }
+}
 
-  for (int i = 0; i < PAGE_TABLE_SIZE; i++) {
-    if(num == page_table[i][j]) {
-      return 0;
+/* Counts the amout of Page Faults */
+void page_fault(void)
+{
+  pagefault++;
+  open_second_mem();
+}
+
+/* Opens the Secondary Memory (in this 
+implementation is equivalent to the BACKING_STORE.bin)
+and find the page with the same number as the 
+current page number. Stores de content of that page in a array */
+void open_second_mem(void) 
+{
+  FILE *second_mem;
+  int aux[256];
+
+  second_mem = fopen("BACKING_STORE.bin", "r");
+  fseek(second_mem, pagenum_dec, SEEK_SET);
+  fread(aux, 256, 1, second_mem);
+
+  add_to_main_mem(aux);
+}
+
+/* Adds the array to a empty frame
+in the Main Memory */
+void add_to_main_mem(int* arr)
+{
+  for(int i = 0; i < MAIN_MEM_SIZE; i++) {
+    if(main_memory[i] == NULL) {
+      main_memory[i] = arr;
+      up_page_table(i);
+      return;
     }
   }
+}
 
+/* Update the Page Table */
+void up_page_table(int frame)
+{
+  page_table[pagenum_dec][0] = frame;
+  page_table[pagenum_dec][1] = ON;
+}
+
+/* Check if a array is already
+inside a frame in the Main Memory */
+void in_main_men(int index)
+{
+  if (page_table[pagenum_dec][1] == ON) {
+    printf("offset: %d\n", offset_dec);
+  } 
+  else {
+    open_second_mem();
+  }
 }

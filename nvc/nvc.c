@@ -4,9 +4,13 @@
 [X] transformação de binário para decimal
 [X] fazer testes com os números da tabela
 [X] aplicar a questão do binário para todos os números do array
-[] fazer a tabela de páginas
+[X] fazer a tabela de páginas
 [] verificar se a instrução está na tabela de páginas
-[] adicionar mais duas funções de tratamento de erro
+[] abrir a memória secundária
+[] colocar o array dentro da memória principal
+[] update na page table
+[] analisar melhor o código
+[] fazer os testes para ver se está funcionando
 
 depois de colocar a instrução na memória, preciso ler ela dnv
 */
@@ -47,10 +51,13 @@ int main()
   fclose(adr_txt);
 
   for (int i = 0; i < 10; i++) {
-    printf("%d: ", secondary_mem_adr[i]);
-    dec_to_bin(secondary_mem_adr[i]);
-    pagenum = get_page_number();
-    in_page_table(pagenum);
+    int count = 0;
+    while(count != 2) { //Call the same instruction twice
+      dec_to_bin(secondary_mem_adr[i]);
+      pagenum = get_page_number();
+      in_page_table(pagenum);
+      count++;
+    }
   }
-
+  
 }
