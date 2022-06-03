@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "errors.h"
 
 #define BIN_SIZE 16 //size of Binary
 #define PAGE_TABLE_SIZE 256
@@ -38,6 +39,7 @@ void in_main_men(int index);
 void add_to_main_mem(int* arr);
 void att_page_table(int index);
 void up_page_table(int frame);
+void make_file(void);
 
 /*
 1. decimal para binário -> dec_to_bin

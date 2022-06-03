@@ -9,7 +9,7 @@
 [] abrir a memória secundária
 [] colocar o array dentro da memória principal
 [] update na page table
-[] analisar melhor o código
+[X] analisar melhor o código
 [] fazer os testes para ver se está funcionando
 
 depois de colocar a instrução na memória, preciso ler ela dnv
@@ -19,6 +19,8 @@ depois de colocar a instrução na memória, preciso ler ela dnv
 [X] transformação de decimal para binário incorreta
 [X] divisão do número binário incorreta
 [X] transformação de binário para decimal incorreta
+[] offset e page num do primeiro número dá 0 
+[] funções de ler do arquivo binário 
 */
 
 /* Begin - Library declaration */

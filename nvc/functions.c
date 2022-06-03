@@ -183,6 +183,7 @@ int in_page_table(int num)
 void page_fault(void)
 {
   pagefault++;
+  //faz page fault 18x -> ou seja, não está achando na memória
   open_second_mem();
 }
 
@@ -193,11 +194,16 @@ current page number. Stores de content of that page in a array */
 void open_second_mem(void) 
 {
   FILE *second_mem;
-  int aux[256];
+  int *aux;
+  aux = (int*) malloc(256*sizeof(int));
 
-  second_mem = fopen("BACKING_STORE.bin", "r");
+  second_mem = fopen("BACKING_STORE.bin", "rb");
+  error_open_file(second_mem);
+
   fseek(second_mem, pagenum_dec, SEEK_SET);
-  fread(aux, 256, 1, second_mem);
+  fread(aux, 256, 1, second_mem); //está lendo sempre o mesmo número
+  
+  fclose(second_mem);
 
   add_to_main_mem(aux);
 }
@@ -227,9 +233,17 @@ inside a frame in the Main Memory */
 void in_main_men(int index)
 {
   if (page_table[pagenum_dec][1] == ON) {
-    printf("offset: %d\n", offset_dec);
+    make_file();
   } 
   else {
     open_second_mem();
   }
+}
+
+void make_file(void)
+{
+  FILE *file;
+  file = fopen("correct.txt", "w");
+  fprintf(file, "Page number: %d, Main mem: %d, Offset: %d", pagenum_dec, page_table[pagenum_dec][0], offset_dec);
+  fclose(file);
 }

@@ -11,4 +11,4 @@ run:
 	./garbage
 
 clean: 
-	rm -rf garbage nvc.o errors.o functions.o
+	rm -rf garbage nvc.o errors.o functions.o correct.txt
