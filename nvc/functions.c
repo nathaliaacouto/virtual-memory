@@ -171,10 +171,11 @@ int in_page_table(int num)
 {
   int pg[2]; 
   int j = 0;
-  if (page_table[num][0] == num) {
+  //se a page table tem algo, não era pra estar indo para page fault
+  if (page_table[num][0] != '\0') {
     in_main_men(num);
   }
-  else {
+  else if (page_table[num][0] == '\0') {
     page_fault();
   }
 }
@@ -183,7 +184,8 @@ int in_page_table(int num)
 void page_fault(void)
 {
   pagefault++;
-  //faz page fault 18x -> ou seja, não está achando na memória
+  printf("  pf: %d  ", pagefault);
+  //faz page fault 12x -> ou seja, não está achando na memória, mas já melhorou vai
   open_second_mem();
 }
 
@@ -195,26 +197,27 @@ void open_second_mem(void)
 {
   FILE *second_mem;
   int *aux;
-  aux = (int*) malloc(256*sizeof(int));
+  aux = (int*) malloc(SECOND_MEM_SIZE*sizeof(int));
 
   second_mem = fopen("BACKING_STORE.bin", "rb");
   error_open_file(second_mem);
 
-  fseek(second_mem, pagenum_dec, SEEK_SET);
-  fread(aux, 256, 1, second_mem); //está lendo sempre o mesmo número
-  
-  fclose(second_mem);
+  fseek(second_mem, pagenum_dec * 256, SEEK_SET);
+  fread(aux, 256, 1, second_mem);
 
-  add_to_main_mem(aux);
+  fclose(second_mem);
+  printf("-- a[0]: %d -- ", aux[0]);
+  add_to_main_mem(aux[0]);
 }
 
 /* Adds the array to a empty frame
 in the Main Memory */
-void add_to_main_mem(int* arr)
+void add_to_main_mem(int arr)
 {
-  for(int i = 0; i < MAIN_MEM_SIZE; i++) {
-    if(main_memory[i] == NULL) {
+  for(int i = 0; i < 10; i++) {
+    if(main_memory[i] == 0) {
       main_memory[i] = arr;
+      printf(" |mm: %d| ", main_memory[i]);
       up_page_table(i);
       return;
     }
@@ -233,6 +236,7 @@ inside a frame in the Main Memory */
 void in_main_men(int index)
 {
   if (page_table[pagenum_dec][1] == ON) {
+    printf("  tá on  ");
     make_file();
   } 
   else {
@@ -243,7 +247,8 @@ void in_main_men(int index)
 void make_file(void)
 {
   FILE *file;
-  file = fopen("correct.txt", "w");
-  fprintf(file, "Page number: %d, Main mem: %d, Offset: %d", pagenum_dec, page_table[pagenum_dec][0], offset_dec);
+  file = fopen("correct.txt", "a");
+  fprintf(file, "Page number: %d, Main mem: %d, Offset: %d\n", pagenum_dec, page_table[pagenum_dec][0], offset_dec);
+  fprintf(file, "\n");
   fclose(file);
 }

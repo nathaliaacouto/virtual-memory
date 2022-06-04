@@ -7,6 +7,7 @@
 #define BIN_SIZE 16 //size of Binary
 #define PAGE_TABLE_SIZE 256
 #define MAIN_MEM_SIZE 128
+#define SECOND_MEM_SIZE 256
 #define ON 1
 #define OFF 0
 
@@ -15,6 +16,7 @@ int offset_dec; //offset
 int page_table[PAGE_TABLE_SIZE][2];
 int main_memory[MAIN_MEM_SIZE];
 int pagefault; //count for page faults
+
 
 /* File functions */
 int* get_str_int(int count);
@@ -36,7 +38,7 @@ int in_page_table(int num);
 void page_fault(void);
 void open_second_mem(void);
 void in_main_men(int index);
-void add_to_main_mem(int* arr);
+void add_to_main_mem(int arr);
 void att_page_table(int index);
 void up_page_table(int frame);
 void make_file(void);

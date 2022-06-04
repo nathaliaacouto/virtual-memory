@@ -53,12 +53,16 @@ int main()
   fclose(adr_txt);
 
   for (int i = 0; i < 10; i++) {
-    int count = 0;
-    while(count != 2) { //Call the same instruction twice
+    int testee = 0;
+    FILE *arquivo;
+    arquivo = fopen("correct.txt", "a");
+    fprintf(arquivo, "Num: %d\n", secondary_mem_adr[i]);
+    fclose(arquivo);
+    while(testee != 2) { //Call the same instruction twice
       dec_to_bin(secondary_mem_adr[i]);
       pagenum = get_page_number();
       in_page_table(pagenum);
-      count++;
+      testee++;
     }
   }
   

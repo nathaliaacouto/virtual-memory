@@ -1,0 +1,34 @@
+Page number: 117, Main mem: 2, Offset: 246
+Page number: 209, Main mem: 3, Offset: 179
+Page number: 156, Main mem: 4, Offset: 249
+Page number: 112, Main mem: 5, Offset: 109
+Page number: 95, Main mem: 6, Offset: 142
+Page number: 189, Main mem: 7, Offset: 15
+Page number: 253, Main mem: 8, Offset: 47
+Page number: 71, Main mem: 9, Offset: 119
+Num: 0
+Num: 62493
+Num: 30198
+Page number: 117, Main mem: 2, Offset: 246
+
+Num: 53683
+Page number: 209, Main mem: 3, Offset: 179
+
+Num: 40185
+Page number: 156, Main mem: 4, Offset: 249
+
+Num: 28781
+Page number: 112, Main mem: 5, Offset: 109
+
+Num: 24462
+Page number: 95, Main mem: 6, Offset: 142
+
+Num: 48399
+Page number: 189, Main mem: 7, Offset: 15
+
+Num: 64815
+Page number: 253, Main mem: 8, Offset: 47
+
+Num: 18295
+Page number: 71, Main mem: 9, Offset: 119
+
