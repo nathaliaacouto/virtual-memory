@@ -20,7 +20,8 @@ depois de colocar a instrução na memória, preciso ler ela dnv
 [X] divisão do número binário incorreta
 [X] transformação de binário para decimal incorreta
 [] offset e page num do primeiro número dá 0 
-[] funções de ler do arquivo binário 
+[X] funções de ler do arquivo binário 
+[] fifo tá dando erro e alguns números não se acham na memória
 */
 
 /* Begin - Library declaration */
@@ -30,6 +31,8 @@ depois de colocar a instrução na memória, preciso ler ela dnv
 
 int main()
 {
+  remove("correct.txt"); //delete file
+
   /* Begin - Variable declaration */
   FILE *adr_txt;
   int *secondary_mem_adr;
@@ -52,17 +55,17 @@ int main()
   //Close file
   fclose(adr_txt);
 
-  for (int i = 0; i < 10; i++) {
-    int testee = 0;
+  for (int i = 0; i < c; i++) {
+    int count = 0;
     FILE *arquivo;
     arquivo = fopen("correct.txt", "a");
     fprintf(arquivo, "Num: %d\n", secondary_mem_adr[i]);
     fclose(arquivo);
-    while(testee != 2) { //Call the same instruction twice
+    while(count != 2) { //Call the same instruction twice
       dec_to_bin(secondary_mem_adr[i]);
       pagenum = get_page_number();
       in_page_table(pagenum);
-      testee++;
+      count++;
     }
   }
   

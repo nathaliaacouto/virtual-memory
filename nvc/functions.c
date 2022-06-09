@@ -11,15 +11,18 @@ int* get_str_int(int count)
   char adr_char[50]; 
   int a = 0;
   int *array;
-
   //Allocate space for array
   array = (int*) malloc(count*sizeof(int));
 
-  while(fgets(adr_char, 50, file)) {
+  int teste = 0;
+  while(a != count) {
+    fgets(adr_char, 50, file);
     int adr_char_int = atoi(adr_char);
     array[a] = adr_char_int;
+    
     a++;
-  } 
+  }
+  
 
   fclose(file);
 
@@ -184,7 +187,6 @@ int in_page_table(int num)
 void page_fault(void)
 {
   pagefault++;
-  printf("  pf: %d  ", pagefault);
   //faz page fault 12x -> ou seja, não está achando na memória, mas já melhorou vai
   open_second_mem();
 }
@@ -206,7 +208,6 @@ void open_second_mem(void)
   fread(aux, 256, 1, second_mem);
 
   fclose(second_mem);
-  printf("-- a[0]: %d -- ", aux[0]);
   add_to_main_mem(aux[0]);
 }
 
@@ -214,13 +215,29 @@ void open_second_mem(void)
 in the Main Memory */
 void add_to_main_mem(int arr)
 {
-  for(int i = 0; i < 10; i++) {
-    if(main_memory[i] == 0) {
-      main_memory[i] = arr;
-      printf(" |mm: %d| ", main_memory[i]);
-      up_page_table(i);
-      return;
+  if(main_mem_count < MAIN_MEM_SIZE) {
+    main_memory[main_mem_count] = arr;
+    main_mem_count++;
+    up_page_table(main_mem_count);
+  }
+  else if(main_mem_count >= MAIN_MEM_SIZE) {
+    int index_out = fifo();
+    main_memory[index_out] = arr;
+  }
+  int aux = main_mem_full;
+  if(aux == 0) {
+    for(int i = 0; i < MAIN_MEM_SIZE; i++) {
+      if(main_memory[i] == 0) {
+        main_memory[i] = arr;
+        up_page_table(i);
+        main_mem_count++;
+        return;
+      }
     }
+  }
+  else if (aux == 1){
+    int out = fifo();
+    main_memory[out] = arr;
   }
 }
 
@@ -236,19 +253,44 @@ inside a frame in the Main Memory */
 void in_main_men(int index)
 {
   if (page_table[pagenum_dec][1] == ON) {
-    printf("  tá on  ");
-    make_file();
+    write_file();
   } 
   else {
     open_second_mem();
   }
 }
 
-void make_file(void)
+void write_file(void)
 {
   FILE *file;
   file = fopen("correct.txt", "a");
   fprintf(file, "Page number: %d, Main mem: %d, Offset: %d\n", pagenum_dec, page_table[pagenum_dec][0], offset_dec);
   fprintf(file, "\n");
   fclose(file);
+}
+
+/* FIFO */
+int fifo(void)
+{
+  int *fifo_pointer = main_memory;
+
+  int aux = *fifo_pointer;
+	fifo_pointer++;
+
+	for(int i = 0; i < 4; i++) {
+		if(aux == main_memory[i]) {
+			return i;
+		}
+	}
+	return 0;
+}
+
+int main_mem_full(void)
+{
+  if(main_mem_count >= MAIN_MEM_SIZE) {
+    return 0;
+  }
+  else {
+    return 1;
+  }
 }
