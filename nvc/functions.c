@@ -224,21 +224,6 @@ void add_to_main_mem(int arr)
     int index_out = fifo();
     main_memory[index_out] = arr;
   }
-  int aux = main_mem_full;
-  if(aux == 0) {
-    for(int i = 0; i < MAIN_MEM_SIZE; i++) {
-      if(main_memory[i] == 0) {
-        main_memory[i] = arr;
-        up_page_table(i);
-        main_mem_count++;
-        return;
-      }
-    }
-  }
-  else if (aux == 1){
-    int out = fifo();
-    main_memory[out] = arr;
-  }
 }
 
 /* Update the Page Table */
@@ -283,14 +268,4 @@ int fifo(void)
 		}
 	}
 	return 0;
-}
-
-int main_mem_full(void)
-{
-  if(main_mem_count >= MAIN_MEM_SIZE) {
-    return 0;
-  }
-  else {
-    return 1;
-  }
 }
