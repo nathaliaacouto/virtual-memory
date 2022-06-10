@@ -1,14 +1,14 @@
-all: garbage
+all: vm
 CC=gcc
 CFLAGS=-I.
 
-garbage: nvc.o errors.o functions.o
-	gcc -o garbage nvc.o errors.o functions.o
+vm: nvc.o errors.o functions.o
+	gcc -o vm nvc.o errors.o functions.o
 
 .PHONY: clean run
 
 run: 
-	./garbage
+	./vm
 
 clean: 
-	rm -rf garbage nvc.o errors.o functions.o
+	rm -rf vm nvc.o errors.o functions.o

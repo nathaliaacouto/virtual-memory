@@ -1,47 +1,31 @@
-/* What the code does */
-
-/* to-do
-[X] transformação de binário para decimal
-[X] fazer testes com os números da tabela
-[X] aplicar a questão do binário para todos os números do array
-[X] fazer a tabela de páginas
-[] verificar se a instrução está na tabela de páginas
-[] abrir a memória secundária
-[] colocar o array dentro da memória principal
-[] update na page table
-[X] analisar melhor o código
-[] fazer os testes para ver se está funcionando
-
-depois de colocar a instrução na memória, preciso ler ela dnv
-*/
-
-/* erros:
-[X] transformação de decimal para binário incorreta
-[X] divisão do número binário incorreta
-[X] transformação de binário para decimal incorreta
-[] offset e page num do primeiro número dá 0 
-[X] funções de ler do arquivo binário 
-[] fifo tá dando erro e alguns números não se acham na memória
-*/
+/* This code simulates the adition of a 
+program in the main memory  */
 
 /* Begin - Library declaration */
 #include "errors.h"
 #include "functions.h"
 /* End - Library declaration */
 
-int main()
+int main(int argc, char *argv[])
 {
+  for(int cont = 0; cont < argc; cont++)
+    printf("%d Parametro: %s\n", cont, argv[cont]);
+
+  error_number_arguments(argc);
+  //error_invalid_parameters(argv); -> não consegue ler os parâmetros
+  char *file_name = argv[1];
+
   remove("correct.txt"); //delete file
 
-  /* Begin - Variable declaration */
+  // Begin - Variable declaration 
   FILE *adr_txt;
   int *secondary_mem_adr;
   int pagenum = 0; //page number
   int offset = 0; //offset 
-  /* End - Variable declaration */
+  // End - Variable declaration
 
   //Open file
-  adr_txt = fopen("addresses.txt","r");
+  adr_txt = fopen(file_name, "r");
   error_open_file(adr_txt);
 
   //Count lines
@@ -61,6 +45,7 @@ int main()
     arquivo = fopen("correct.txt", "a");
     fprintf(arquivo, "Num: %d\n", secondary_mem_adr[i]);
     fclose(arquivo);
+  
     while(count != 2) { //Call the same instruction twice
       dec_to_bin(secondary_mem_adr[i]);
       pagenum = get_page_number();

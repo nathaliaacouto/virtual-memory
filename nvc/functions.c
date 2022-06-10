@@ -191,6 +191,16 @@ void page_fault(void)
   open_second_mem();
 }
 
+/* Update the Page Table */
+void up_page_table(int frame)
+{
+  page_table[pagenum_dec][0] = frame;
+  page_table[pagenum_dec][1] = ON;
+}
+
+
+/* MEMORY FUNCTIONS */
+
 /* Opens the Secondary Memory (in this 
 implementation is equivalent to the BACKING_STORE.bin)
 and find the page with the same number as the 
@@ -226,13 +236,6 @@ void add_to_main_mem(int arr)
   }
 }
 
-/* Update the Page Table */
-void up_page_table(int frame)
-{
-  page_table[pagenum_dec][0] = frame;
-  page_table[pagenum_dec][1] = ON;
-}
-
 /* Check if a array is already
 inside a frame in the Main Memory */
 void in_main_men(int index)
@@ -245,6 +248,8 @@ void in_main_men(int index)
   }
 }
 
+/* Function to write a file with informations about the
+number, such as page number, frame in mais memory and offset */
 void write_file(void)
 {
   FILE *file;
@@ -254,18 +259,23 @@ void write_file(void)
   fclose(file);
 }
 
-/* FIFO */
+/* REPLACEMENT FUNCTIONS */
+
+/* FIFO - First number in is the first one out */
 int fifo(void)
 {
-  int *fifo_pointer = main_memory;
-
   int aux = *fifo_pointer;
 	fifo_pointer++;
 
-	for(int i = 0; i < 4; i++) {
+  count_fifo++;
+  if(count_fifo == MAIN_MEM_SIZE) {
+    fifo_pointer = main_memory;
+    count_fifo = 0;
+  }
+
+	for(int i = 0; i < MAIN_MEM_SIZE; i++) {
 		if(aux == main_memory[i]) {
-			return i;
+      return i;
 		}
 	}
-	return 0;
 }

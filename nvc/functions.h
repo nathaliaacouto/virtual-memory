@@ -18,6 +18,8 @@ int page_table[PAGE_TABLE_SIZE][2];
 int main_memory[MAIN_MEM_SIZE];
 int pagefault; //count for page faults
 int main_mem_count;
+int *fifo_pointer = main_memory;
+int count_fifo = 0;
 
 /* File functions */
 int* get_str_int(int count);
@@ -44,7 +46,7 @@ void att_page_table(int index);
 void up_page_table(int frame);
 void write_file(void);
 int fifo(void);
-int main_mem_full(void);
+void print_arr(void);
 
 /*
 1. decimal para binário -> dec_to_bin
