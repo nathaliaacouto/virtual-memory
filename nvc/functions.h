@@ -18,8 +18,6 @@ int page_table[PAGE_TABLE_SIZE][2];
 int main_memory[MAIN_MEM_SIZE];
 int pagefault; //count for page faults
 int main_mem_count;
-int *fifo_pointer = main_memory;
-int count_fifo = 0;
 
 /* File functions */
 int* get_str_int(int count);

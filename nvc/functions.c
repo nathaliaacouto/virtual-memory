@@ -230,10 +230,12 @@ void add_to_main_mem(int arr)
     main_mem_count++;
     up_page_table(main_mem_count);
   }
+  
   else if(main_mem_count >= MAIN_MEM_SIZE) {
     int index_out = fifo();
     main_memory[index_out] = arr;
   }
+  
 }
 
 /* Check if a array is already
@@ -254,7 +256,7 @@ void write_file(void)
 {
   FILE *file;
   file = fopen("correct.txt", "a");
-  fprintf(file, "Page number: %d, Main mem: %d, Offset: %d\n", pagenum_dec, page_table[pagenum_dec][0], offset_dec);
+  fprintf(file, "Main Memory Address: %d, Offset: %d\n", page_table[pagenum_dec][0], offset_dec);
   fprintf(file, "\n");
   fclose(file);
 }
@@ -262,6 +264,10 @@ void write_file(void)
 /* REPLACEMENT FUNCTIONS */
 
 /* FIFO - First number in is the first one out */
+//ATTENTION: FIFO IS NOT WORKING
+
+int *fifo_pointer = main_memory;
+int count_fifo = 0;
 int fifo(void)
 {
   int aux = *fifo_pointer;

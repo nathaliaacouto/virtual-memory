@@ -8,11 +8,8 @@ program in the main memory  */
 
 int main(int argc, char *argv[])
 {
-  for(int cont = 0; cont < argc; cont++)
-    printf("%d Parametro: %s\n", cont, argv[cont]);
-
   error_number_arguments(argc);
-  //error_invalid_parameters(argv); -> não consegue ler os parâmetros
+  //error_invalid_parameters(argv); -> error
   char *file_name = argv[1];
 
   remove("correct.txt"); //delete file
@@ -43,7 +40,7 @@ int main(int argc, char *argv[])
     int count = 0;
     FILE *arquivo;
     arquivo = fopen("correct.txt", "a");
-    fprintf(arquivo, "Num: %d\n", secondary_mem_adr[i]);
+    fprintf(arquivo, "Virtual Address: %d, ", secondary_mem_adr[i]);
     fclose(arquivo);
   
     while(count != 2) { //Call the same instruction twice
