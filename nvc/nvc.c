@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
   //Count lines
   int c = count_file_lines(adr_txt);
   error_file_empty(c);
-
+  
   //Get numbers from file and put them in array
   secondary_mem_adr = (int*) malloc(c*sizeof(int));
   secondary_mem_adr = get_str_int(c); 
